@@ -11,7 +11,7 @@ Repositorio con diferentes herramientas que podemos usar dentro del CDC
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  [git clone https://link-to-project](https://github.com/devsecops-netics/herramientasVarias.git)
 ```
 
 Instalar las siguientes dependencias de Python
