@@ -17,7 +17,7 @@ Clone the project
 Instalar las siguientes dependencias de Python
 
 ```bash
-  pip install faster-whisper moviepy
+  pip install faster-whisper moviepy deep-translator
 ```
 
 Instalacion de faster-whisper usa FFmpeg
