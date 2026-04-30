@@ -6,20 +6,23 @@ import json
 # ===================================
 # CONFIGURACION
 # ===================================
-VIDEO_FILE = "uno.mp4"
-AUDIO_FILE = "audio.wav"
-
-MODEL_SIZE = "medium"
-DEVICE = "cpu"
+properties = {
+    "VIDEO_FILE": "uno.mp4",
+    "AUDIO_FILE": "audio.wav",
+    "MODEL_SIZE": "medium",
+    "DEVICE": "cpu",
+    "ARCHIVO_TRANSCRITO": "transcripcion_es.txt",
+    "TRANSCRIPCION" : "transcripcion.txt"
+}
 
 # ===================================
 # 1️⃣ EXTRAER AUDIO
 # ===================================
 print("Extrayendo audio...")
 
-video = mp.VideoFileClip(VIDEO_FILE)
+video = mp.VideoFileClip(properties["VIDEO_FILE"])
 video.audio.write_audiofile(
-    AUDIO_FILE,
+    properties["AUDIO_FILE"],
     fps=16000,
     codec="pcm_s16le"
 )
@@ -30,8 +33,8 @@ video.audio.write_audiofile(
 print("Cargando modelo Whisper...")
 
 model = WhisperModel(
-    MODEL_SIZE,
-    device=DEVICE,
+    properties["MODEL_SIZE"],
+    device=properties["DEVICE"],
     compute_type="int8"
 )
 
@@ -41,7 +44,7 @@ model = WhisperModel(
 print("Transcribiendo...")
 
 segments, info = model.transcribe(
-    AUDIO_FILE,
+    properties["AUDIO_FILE"],
     beam_size=5,
     task="transcribe"   # ← mantiene idioma original
 )
@@ -81,7 +84,8 @@ for i, segment in enumerate(segments, start=1):
 # ===================================
 print("Guardando transcripción...")
 
-with open("transcripcion.txt", "w", encoding="utf-8") as f:
+#with open("transcripcion.txt", "w", encoding="utf-8") as f:
+with open(properties["ARCHIVO_TRANSCRITO"], "w", encoding="utf-8") as f:
     f.write(texto_total)
 
 with open("subtitulos.srt", "w", encoding="utf-8") as f:
@@ -112,7 +116,9 @@ def traducir_texto_largo(texto, chunk_size=4000):
 
 texto_es = traducir_texto_largo(texto_total)
 
-with open("transcripcion_es.txt", "w", encoding="utf-8") as f:
+#with open("transcripcion_es.txt", "w", encoding="utf-8") as f:
+with open(properties["ARCHIVO_TRANSCRITO"], "w", encoding="utf-8") as f:
+
     f.write(texto_es)
 
 print("✅ Traducción completada")
